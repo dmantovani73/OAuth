@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OAuth.Data;
+using OAuth.Security;
+using OAuth.Security.Policies;
 using OAuth.Services;
 using System;
 using System.Collections.Generic;
@@ -48,6 +51,17 @@ namespace OAuth
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyName.IsAdmin, policyBuilder =>
+                    policyBuilder.AddRequirements(
+                        new IsAdmin(),
+                        new IsAgeGreaterThan { Age = 18 }));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, IsAdminAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, IsAgeGreaterThanAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

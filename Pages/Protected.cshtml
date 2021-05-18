@@ -1,0 +1,11 @@
+﻿@page
+@model OAuth.Pages.ProtectedModel
+
+<ul>
+    <li>
+        DateOfBirth: @User.FindFirst(ClaimName.DateOfBirth)?.Value
+    </li>
+    <li>
+        Role: @User.FindFirst(ClaimName.Role)?.Value
+    </li>
+</ul>
