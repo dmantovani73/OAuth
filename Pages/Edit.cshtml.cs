@@ -31,6 +31,7 @@ namespace OAuth.Pages
             Recipe = _service.GetRecipe(id);
             var authResult = await _authService
                 .AuthorizeAsync(User, Recipe, "CanManageRecipe");
+
             if (!authResult.Succeeded)
             {
                 return new ForbidResult();
