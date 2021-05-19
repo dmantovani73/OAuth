@@ -18,7 +18,7 @@ namespace OAuth.Security.Policies
             }
             else
             {
-                if (DateTime.TryParseExact(claim.Value, "yyyy-MM-dd", null, DateTimeStyles.None, out var dateOfBirth))
+                if (DateTime.TryParseExact(claim.Value, DateTimeFormat.YyyyMmdd, null, DateTimeStyles.None, out var dateOfBirth))
                 {
                     var age = (DateTime.Today - dateOfBirth).TotalDays / 365;
                     if (age >= requirement.Age)

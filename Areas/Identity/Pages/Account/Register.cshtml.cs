@@ -98,7 +98,7 @@ namespace OAuth.Areas.Identity.Pages.Account
 
                     await _userManager.AddClaimsAsync(user, new[]
                     {
-                        new Claim(ClaimName.DateOfBirth, Input.DateOfBirth.ToString("yyyy-MM-dd")),
+                        new Claim(ClaimName.DateOfBirth, Input.DateOfBirth.ToString(DateTimeFormat.YyyyMmdd)),
                         new Claim(ClaimName.Role, Input.Role),
                     });
                     
